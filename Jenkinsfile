@@ -1,10 +1,7 @@
-pipeline {
-    agent { dockerfile true }
-    stages {
-        stage('Build') {
-            steps {
-                sh 'node --version'
-            }
-        }
-    }
-}
+FROM node:16
+WORKDIR /usr/src/app
+COPY package*.json ./
+RUN npm install
+COPY . .
+EXPOSE 8080
+ENTRYPOINT [ "npm","run", "start" ]
