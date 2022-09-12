@@ -1,7 +1,12 @@
-FROM node:16
-WORKDIR /usr/src/app
-COPY package*.json ./
-RUN npm install
-COPY . .
-EXPOSE 8080
-ENTRYPOINT [ "npm","run", "start" ]
+node {
+
+    checkout scm
+
+    docker.withRegistry('https://registry.hub.docker.com', 'docker-hub-id') {
+
+        def customImage = docker.build("mallaamruta/dockerwebapp")
+
+        /* Push the container to the custom Registry */
+        customImage.push()
+    }
+}
